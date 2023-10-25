@@ -44,6 +44,10 @@ function M.closeFoldsWith(level)
     return require('ufo.action').closeFolds(level or vim.v.count)
 end
 
+function M.closeFoldsWithExact(level)
+    return require('ufo.action').closeFoldsExact(level or vim.v.count)
+end
+
 ---Open folds except specified kinds
 ---@param kinds? UfoFoldingRangeKind[] kind in ranges, get default kinds from `config.close_fold_kinds_for_ft`
 function M.openFoldsExceptKinds(kinds)

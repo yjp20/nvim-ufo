@@ -166,6 +166,25 @@ function M.closeFolds(level)
     end
 end
 
+function M.closeFoldsExact(level)
+    local curBufnr = api.nvim_get_current_buf()
+    local fb = fold.get(curBufnr)
+    if not fb then
+        return
+    end
+
+    lastnum = 0
+    for _, range in ipairs(fb.foldRanges) do
+        line = range.startLine + 1
+        if fn.foldlevel(line) == level and lastnum < line then
+            fb:closeFold(line, range.endLine + 1)
+            cmd(line .. 'foldclose')
+            vim.print(line  .. 'foldclose')
+            lastnum = line
+        end
+    end
+end
+
 function M.openFoldsExceptKinds(kinds)
     cmd('silent! %foldopen!')
     local curBufnr = api.nvim_get_current_buf()
